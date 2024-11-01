@@ -1,8 +1,8 @@
 {
-  "name": "console",
-  "displayName": "console",
-  "description": "",
-  "version": "0.0.1",
+  "name": "commonlisp-formatter",
+  "displayName": "commonlisp-formatter",
+  "description": "commonlisp-formatter",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.94.0"
   },
