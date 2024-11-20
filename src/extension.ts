@@ -74,14 +74,41 @@ function formatLispCode(code: string): string {
 		} else if (char === ')') {
 			indentLevel = Math.max(0, indentLevel - 1);
 			result += `)`;
-		} else if (char === ";" && code[i + 1] === ";") {
-			result += `\n${' '.repeat(indentLevel * 2)};`;
-		} else if (char === "T" && code[i + 1] === "T" && code[i + 2] === "T") {
-			i += 3;
-			if (code[i + 1] !== "(") {
-				result += `\n${' '.repeat(indentLevel * 2)}`;
+		} else if (char == ";") {
+			if (code[i + 1] == ";") {
+				console.log(code[i + 1])
+				result += "\n";
 			}
-		} else {
+
+			// `;` が出現した場合
+			result += char; // 現在の `char` を追加
+
+			// 次の文字を調べる
+			while (i + 1 < code.length) {
+				const nextChar = code[i + 1];
+
+				if (nextChar === "T" && code[i + 2] === "T" && code[i + 3] === "T") {
+					// `TTT` を検出した場合
+					i += 3; // `TTT` をスキップ
+					// result += "\n"; // 改行を追加
+					break; // ループを抜ける
+				} else {
+					// `TTT` に到達するまで文字を追加
+					result += nextChar;
+					i++; // ポインタを進める
+				}
+			}
+		}
+		// else if (char === ";" && code[i + 1] === ";") {
+		// 	result += `\n${' '.repeat(indentLevel * 2)};`;
+		// }
+		// else if (char === "T" && code[i + 1] === "T" && code[i + 2] === "T") {
+		// 	i += 3;
+		// 	if (code[i + 1] !== "(") {
+		// 		result += `\n${' '.repeat(indentLevel * 2)}`;
+		// 	}
+		// }
+		else {
 			result += char;
 		}
 		i++;

@@ -19,11 +19,11 @@
 (describe-location 'living-room *nodes*) 
 
 (defparameter *edges* `( 
-  (living-room (garden west door) 
-    (attic upstairs ladder)) ;test
+  (living-room (garden west door) ;ffdffd  
+    (attic upstairs ladder)) ;test  
   (garden 
     (living-room east door)) 
-  ;; test
+;; test  
   (attic 
     (living-room downstairs ladder)) ) ) 
 
