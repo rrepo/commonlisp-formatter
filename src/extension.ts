@@ -79,7 +79,6 @@ function formatLispCode(code: string): string {
 				console.log(code[i + 1])
 				result += "\n";
 			}
-
 			// `;` が出現した場合
 			result += char; // 現在の `char` を追加
 
@@ -90,7 +89,7 @@ function formatLispCode(code: string): string {
 				if (nextChar === "T" && code[i + 2] === "T" && code[i + 3] === "T") {
 					// `TTT` を検出した場合
 					i += 3; // `TTT` をスキップ
-					// result += "\n"; // 改行を追加
+					result += "\n"; // 改行を追加
 					break; // ループを抜ける
 				} else {
 					// `TTT` に到達するまで文字を追加
