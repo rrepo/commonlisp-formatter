@@ -37,6 +37,7 @@ function formatLispCode(code: string): string {
 	let indentLevel = 0;
 	let result = '';
 	let i = 0;
+	let inString = false; // 文字列リテラル内かどうかを追跡
 
 	// 改行と余分なスペースを削除して正規化
 	code = code
@@ -47,6 +48,21 @@ function formatLispCode(code: string): string {
 
 	while (i < code.length) {
 		const char: string = code[i];
+
+		// 文字列リテラルの開始と終了を判定
+		if (char === '"' && (i === 0 || code[i - 1] !== '\\')) {
+			inString = !inString; // 文字列リテラルの状態を切り替える
+			result += char;
+			i++;
+			continue;
+		}
+
+		// 文字列リテラル内ではそのまま追加
+		if (inString) {
+			result += char;
+			i++;
+			continue;
+		}
 
 		if ((char === '(') && (i === 0 || code[i - 1] !== '\'' && code[i - 1] !== '`')) {
 			let content = '';
@@ -79,6 +95,7 @@ function formatLispCode(code: string): string {
 				console.log(code[i + 1])
 				result += "\n";
 			}
+
 			// `;` が出現した場合
 			result += char; // 現在の `char` を追加
 
@@ -101,12 +118,12 @@ function formatLispCode(code: string): string {
 		// else if (char === ";" && code[i + 1] === ";") {
 		// 	result += `\n${' '.repeat(indentLevel * 2)};`;
 		// }
-		// else if (char === "T" && code[i + 1] === "T" && code[i + 2] === "T") {
-		// 	i += 3;
-		// 	if (code[i + 1] !== "(") {
-		// 		result += `\n${' '.repeat(indentLevel * 2)}`;
-		// 	}
-		// }
+		else if (char === "T" && code[i + 1] === "T" && code[i + 2] === "T") {
+			i += 3;
+			if (code[i + 1] !== "(") {
+				result += `\n${' '.repeat(indentLevel * 2)}`;
+			}
+		}
 		else {
 			result += char;
 		}
